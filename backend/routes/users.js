@@ -58,7 +58,6 @@ router.route('/login').post((req,res) => {
                         expiresIn: 1440
                     })
                     res.send(token)
-                    res.json({msg: 'Successfully logged in!'});
                 } else {
                     return res.status(400).json({msg: 'User does not exist'});
                 }
