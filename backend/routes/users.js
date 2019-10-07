@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const jwt = require('jsonwebtoken');
 let User = require('../models/user.model');
 
 router.route('/').get((req,res) => {
@@ -35,7 +36,38 @@ router.route('/add').post((req,res) => {
             newUser.save()
             .then(() => res.json({msg: 'User added!'}))
             .catch(err => res.status(400).json('Error: ' + err));
-        });
+        })
+});
+
+router.route('/login').post((req,res) => {
+    const {email, password} = req.body;
+
+    User.findOne({email})
+    .then( user => {
+        if(user) {
+            user.comparePassword(password, function(err, isMatch) {
+                if(err) throw err;
+                if(isMatch) {
+                    const payload = {
+                        _id: user._id,
+                        firstname: user.firstname,
+                        lastname: user.lastname,
+                        email: user.email
+                    }
+                    let token = jwt.sign(payload, process.env.SECRET_KEY, {
+                        expiresIn: 1440
+                    })
+                    res.send(token)
+                    res.json({msg: 'Successfully logged in!'});
+                } else {
+                    return res.status(400).json({msg: 'User does not exist'});
+                }
+            });
+        } else {
+            return res.status(400).json({msg: 'User does not exist'});
+        }  
+    })
+    .catch(err => res.status(400).json('Error: ' + err))
 });
 
 module.exports = router;
