@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { TextField } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import axios from 'axios';
 
 export default class RegisterUser extends Component {
@@ -64,56 +67,62 @@ export default class RegisterUser extends Component {
 
     render(){
         return (
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-                <div><h3>Register User!</h3></div>
-                <form onSubmit={this.onSubmit} autoComplete="off">
-                    <div>
-                        <TextField
-                        required
-                        id="standard-basic"
-                        label="Firstname"
-                        margin="normal"
-                        value={this.state.firstname}
-                        onChange={this.onChangeFirstname}
-                        />
-                    </div>  
-                    <div>
-                        <TextField
-                        required
-                        id="standard-basic"
-                        label="Lastname"
-                        margin="normal"
-                        value={this.state.lastname}
-                        onChange={this.onChangeLastname}
-                        />
-                    </div>   
-                    <div>
-                        <TextField
-                        required
-                        id="standard-basic"
-                        label="Email"
-                        margin="normal"
-                        value={this.state.email}
-                        onChange={this.onChangeEmail}
-                        />
-                    </div>   
-                    <div>
-                        <TextField
-                        required
-                        id="standard-basic"
-                        label="Password"
-                        margin="normal"
-                        value={this.state.password}
-                        onChange={this.onChangePassword}
-                        />
-                    </div>   
-                    <button
-                        onClick={this.onSubmit}
-                        >
-                        Submit
-                    </button>
-                </form>
-            </div>
+            <Container>
+                <Row>
+                    <Col><h3>Register User!</h3></Col>
+                </Row>
+                <Row>
+                    <Col>
+                    <form onSubmit={this.onSubmit} autoComplete="off">
+                        <div>
+                            <TextField
+                            required
+                            id="standard-basic"
+                            label="Firstname"
+                            margin="normal"
+                            value={this.state.firstname}
+                            onChange={this.onChangeFirstname}
+                            />
+                        </div>  
+                        <div>
+                            <TextField
+                            required
+                            id="standard-basic"
+                            label="Lastname"
+                            margin="normal"
+                            value={this.state.lastname}
+                            onChange={this.onChangeLastname}
+                            />
+                        </div>   
+                        <div>
+                            <TextField
+                            required
+                            id="standard-basic"
+                            label="Email"
+                            margin="normal"
+                            value={this.state.email}
+                            onChange={this.onChangeEmail}
+                            />
+                        </div>   
+                        <div>
+                            <TextField
+                            required
+                            id="standard-basic"
+                            label="Password"
+                            margin="normal"
+                            value={this.state.password}
+                            onChange={this.onChangePassword}
+                            />
+                        </div>   
+                        <button
+                            onClick={this.onSubmit}
+                            >
+                            Submit
+                        </button>
+                    </form>
+                    </Col>
+                </Row>
+           </Container>
         )
     }
 }
