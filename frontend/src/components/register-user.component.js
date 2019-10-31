@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { TextField } from '@material-ui/core';
 import axios from 'axios';
 
 export default class RegisterUser extends Component {
@@ -63,33 +64,49 @@ export default class RegisterUser extends Component {
 
     render(){
         return (
-            <div>
-                <h3>Register User!</h3>
-                <form onSubmit={this.onSubmit}>
-                    <label>Firstname: </label>
-                    <input 
-                        required 
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <div><h3>Register User!</h3></div>
+                <form onSubmit={this.onSubmit} autoComplete="off">
+                    <div>
+                        <TextField
+                        required
+                        id="standard-basic"
+                        label="Firstname"
+                        margin="normal"
                         value={this.state.firstname}
                         onChange={this.onChangeFirstname}
                         />
-                    <label>Lastname: </label>
-                    <input 
-                        required 
+                    </div>  
+                    <div>
+                        <TextField
+                        required
+                        id="standard-basic"
+                        label="Lastname"
+                        margin="normal"
                         value={this.state.lastname}
                         onChange={this.onChangeLastname}
                         />
-                    <label>Email: </label>
-                    <input 
-                        required 
+                    </div>   
+                    <div>
+                        <TextField
+                        required
+                        id="standard-basic"
+                        label="Email"
+                        margin="normal"
                         value={this.state.email}
                         onChange={this.onChangeEmail}
                         />
-                    <label>Password: </label>
-                    <input 
-                        required 
+                    </div>   
+                    <div>
+                        <TextField
+                        required
+                        id="standard-basic"
+                        label="Password"
+                        margin="normal"
                         value={this.state.password}
                         onChange={this.onChangePassword}
                         />
+                    </div>   
                     <button
                         onClick={this.onSubmit}
                         >
