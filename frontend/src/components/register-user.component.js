@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Button, Form, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import axios from 'axios';
 
 export default class RegisterUser extends Component {
@@ -61,68 +58,58 @@ export default class RegisterUser extends Component {
             .then(res => console.log(res.data))
             .catch(error => console.log(error));
 
-        console.log(user)
     }
-
 
     render(){
         return (
-            <Container>
-                <Row>
-                    <Col><h3>Register User!</h3></Col>
-                </Row>
-                <Row>
-                    <Col>
-                    <form onSubmit={this.onSubmit} autoComplete="off">
-                        <div>
-                            <TextField
-                            required
-                            id="standard-basic"
-                            label="Firstname"
-                            margin="normal"
+            <div>
+                <h3 style={{paddingTop: '100px', paddingBottom: '40px'}}>Register User!</h3>
+                <Form onSubmit={this.onSubmit} autoComplete="off">
+                    <FormGroup size="large">
+                        <FormLabel>Firstname</FormLabel>
+                        <FormControl
+                            autoFocus
+                            required 
+                            type="text"
                             value={this.state.firstname}
                             onChange={this.onChangeFirstname}
-                            />
-                        </div>  
-                        <div>
-                            <TextField
-                            required
-                            id="standard-basic"
-                            label="Lastname"
-                            margin="normal"
+                        />
+                    </FormGroup>
+                    <FormGroup size="large">
+                        <FormLabel>Lastname</FormLabel>
+                        <FormControl
+                            autoFocus
+                            required 
+                            type="text"
                             value={this.state.lastname}
                             onChange={this.onChangeLastname}
-                            />
-                        </div>   
-                        <div>
-                            <TextField
-                            required
-                            id="standard-basic"
-                            label="Email"
-                            margin="normal"
+                        />
+                    </FormGroup>
+                    <FormGroup size="large">
+                        <FormLabel>Email</FormLabel>
+                        <FormControl
+                            autoFocus
+                            required 
+                            type="email"
                             value={this.state.email}
                             onChange={this.onChangeEmail}
-                            />
-                        </div>   
-                        <div>
-                            <TextField
-                            required
-                            id="standard-basic"
-                            label="Password"
-                            margin="normal"
+                        />
+                    </FormGroup>
+                    <FormGroup size="large">
+                        <FormLabel>Password</FormLabel>
+                        <FormControl
+                            autoFocus
+                            required 
+                            type="password"
                             value={this.state.password}
                             onChange={this.onChangePassword}
-                            />
-                        </div>   
-                        <button
-                            onClick={this.onSubmit}
-                            >
-                            Submit
-                        </button>
-                    </form>
-                    </Col>
-                </Row>
-           </Container>
+                        />
+                    </FormGroup>
+                    <Button block size="large" type="submit">
+                        Sign up
+                    </Button>
+                </Form>
+           </div>
         )
     }
 }

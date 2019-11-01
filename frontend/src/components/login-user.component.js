@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-//import { Formik } from 'formik';
 import axios from 'axios';
 
 
@@ -42,37 +41,36 @@ export default class LoginUser extends Component {
             .then(res => console.log(res.data))
             .catch(error => console.log(error));
 
-        console.log(user)
     }
 
     render(){
         return (
             <div>
                 <h3 style={{paddingTop: '100px', paddingBottom: '40px'}}>Login User!</h3>
-                        <Form onSubmit={this.onSubmit}>
-                            <FormGroup controlId="email" size="large">
-                                <FormLabel>Email</FormLabel>
-                                <FormControl
-                                    autoFocus
-                                    required 
-                                    type="email"
-                                    value={this.state.email}
-                                    onChange={this.onChangeEmail}
-                            />
-                            </FormGroup>
-                            <FormGroup controlId="password" size="large">
-                                <FormLabel>Password</FormLabel>
-                                <FormControl
-                                    required 
-                                    value={this.state.password}
-                                    onChange={this.onChangePassword}
-                                    type="password"
-                                />
-                            </FormGroup>
-                            <Button block size="large" type="submit">
-                            Login
-                            </Button>
-                        </Form>
+                <Form onSubmit={this.onSubmit}>
+                    <FormGroup size="large">
+                        <FormLabel>Email</FormLabel>
+                        <FormControl
+                            autoFocus
+                            required 
+                            type="email"
+                            value={this.state.email}
+                            onChange={this.onChangeEmail}
+                    />
+                    </FormGroup>
+                    <FormGroup size="large">
+                        <FormLabel>Password</FormLabel>
+                        <FormControl
+                            required 
+                            value={this.state.password}
+                            onChange={this.onChangePassword}
+                            type="password"
+                        />
+                    </FormGroup>
+                    <Button block size="large" type="submit">
+                    Login
+                    </Button>
+                </Form>
             </div>
         )
     }
