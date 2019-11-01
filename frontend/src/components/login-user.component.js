@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { Button, Form, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+//import { Formik } from 'formik';
 import axios from 'axios';
+
 
 export default class LoginUser extends Component {
     constructor(props){
@@ -45,26 +48,31 @@ export default class LoginUser extends Component {
     render(){
         return (
             <div>
-                <h3>Login User!</h3>
-                <form onSubmit={this.onSubmit}>
-                    <label>Email: </label>
-                    <input 
-                        required 
-                        value={this.state.email}
-                        onChange={this.onChangeEmail}
-                        />
-                    <label>Password: </label>
-                    <input 
-                        required 
-                        value={this.state.password}
-                        onChange={this.onChangePassword}
-                        />
-                    <button
-                        onClick={this.onSubmit}
-                        >
-                        Submit
-                    </button>
-                </form>
+                <h3 style={{paddingTop: '100px', paddingBottom: '40px'}}>Login User!</h3>
+                        <Form onSubmit={this.onSubmit}>
+                            <FormGroup controlId="email" size="large">
+                                <FormLabel>Email</FormLabel>
+                                <FormControl
+                                    autoFocus
+                                    required 
+                                    type="email"
+                                    value={this.state.email}
+                                    onChange={this.onChangeEmail}
+                            />
+                            </FormGroup>
+                            <FormGroup controlId="password" size="large">
+                                <FormLabel>Password</FormLabel>
+                                <FormControl
+                                    required 
+                                    value={this.state.password}
+                                    onChange={this.onChangePassword}
+                                    type="password"
+                                />
+                            </FormGroup>
+                            <Button block size="large" type="submit">
+                            Login
+                            </Button>
+                        </Form>
             </div>
         )
     }
