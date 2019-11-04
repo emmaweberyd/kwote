@@ -45,7 +45,7 @@ const SignupForm = () => {
             console.log(user)
             axios.post('http://localhost:5000/users/add', user)
                 .then(res => console.log(res.data))
-                .catch(error => console.log(error));
+                .catch(error => console.log(error.response.data.msg));
         },
     });
     return (
