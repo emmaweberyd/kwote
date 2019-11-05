@@ -11,11 +11,13 @@ export const getPosts = () => dispatch => {
     );
 };
 
-export const deletePost = id => {
-    return {
-        type: DELETE_POST,
-        payload: id
-    };
+export const deletePost = id => dispatch => {
+    axios.delete(`http://localhost:5000/posts/${id}`).then(res =>
+        dispatch({
+            type: DELETE_POST,
+            payload: id
+        })
+    );
 };
 
 export const setPostsLoading = () => {
