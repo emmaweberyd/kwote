@@ -22,12 +22,12 @@ class Posts extends Component {
        const { posts } = this.props.post
         return (
             <List dense>
-                {posts.map(({id, quote}) => {
+                {posts.map(({_id, quote}) => {
                     return (
-                    <ListItem key={id} button>
+                    <ListItem key={_id} button>
                         <ListItemText primary={quote} />
                         <IconButton 
-                            onClick={this.onDelete.bind(this,id)} 
+                            onClick={this.onDelete.bind(this,_id)} 
                             edge="end" 
                             aria-label="delete"
                         >
