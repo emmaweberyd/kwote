@@ -7,6 +7,7 @@ import { getPosts, deletePost } from '../actions/postActions';
 import propTypes from 'prop-types';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
+import PostForm from './post-form.component';
 
 class Posts extends Component {
 
@@ -21,6 +22,8 @@ class Posts extends Component {
     render() {
        const { posts } = this.props.post
         return (
+            <div>
+            <PostForm/>
             <List dense>
                 {posts.map(({_id, quote}) => {
                     return (
@@ -37,6 +40,7 @@ class Posts extends Component {
                     );
                 })}
             </List>
+            </div>
         );
     }
 }
