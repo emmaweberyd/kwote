@@ -34,7 +34,18 @@ router.route('/add').post((req,res) => {
             });
 
             newUser.save()
-            .then(() => res.send({msg: 'User added!'}))
+            .then(user => {
+                const payload = {
+                    _id: user._id,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    email: user.email
+                }
+                let token = jwt.sign(payload, process.env.SECRET_KEY, {
+                    expiresIn: 1440
+                })
+                res.send(token);
+            })
             .catch(err => res.status(400).send({msg: err}));
         })
 });
