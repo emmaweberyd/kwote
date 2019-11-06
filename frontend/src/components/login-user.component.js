@@ -34,7 +34,7 @@ const LoginForm = () => {
                 email: values.email,
                 password: values.password
             }
-            axios.post('http://localhost:5000/users/auth', user)
+            axios.post('http://localhost:5000/users/login', user)
                 .then(res => console.log(res.data))
                 .catch(error => {
                     console.log(error.response.data.msg);

@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 let User = require('../models/user.model');
+const auth = require('../middleware/auth');
+
 
 router.route('/').get((req,res) => {
     User.find()
@@ -50,7 +52,7 @@ router.route('/add').post((req,res) => {
         })
 });
 
-router.route('/auth').post((req,res) => {
+router.post('/login', (req,res) => {
     const {email, password} = req.body;
 
     User.findOne({email})
