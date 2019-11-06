@@ -22,10 +22,28 @@ export const loadUser = () => (dispatch, getState) => {
             payload: res.data
         }))
         .catch(err => {
-            dispatch(returnErrors(err.response.data, err.response.status));
-            dispatch({
-                type: AUTH_ERROR
-            });
+            dispatch(returnErrors(err.response.data, err.response.status, 'AUTH_ERROR'));
+            dispatch({ type: AUTH_ERROR });
+        });
+}
+
+export const register = ({ firstname, lastname, email, password }) => dispatch => {
+    const config = {
+        headers: {
+            "Content-type": "application/json"
+        }
+    }
+
+    const body = JSON.stringify({ firstname, lastname, email, password });
+
+    axios.post('http://localhost:5000/users/add', body, config)
+        .then(res => dispatch({
+            type: REGISTER_SUCCESS,
+            payload: res.data
+        }))
+        .catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL'));
+            dispatch({ type: REGISTER_FAIL });
         });
 }
 

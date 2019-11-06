@@ -1,23 +1,69 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { Button, Form, FormGroup, FormControl, FormLabel, Alert } from "react-bootstrap";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import axios from 'axios';
+import propTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { register } from '../actions/authActions';
+import { clearErrors } from '../actions/errorActions';
 
-export default class RegisterUser extends Component {
+class RegisterUser extends Component {
+    state = {
+        msg: null
+    }
+
+    componentDidMount() {
+        this.props.clearErrors();
+    }
+
+    componentDidUpdate(prevProps) {
+        const { error } = this.props;
+        if(error !== prevProps.error) {
+            if(error.id === 'REGISTER_FAIL') {
+                this.setState({ msg: error.msg.msg });
+                setTimeout(() => {
+                    this.setState({ msg: null });
+                }, 4000);
+            } else {
+                this.setState({ msg: null });
+            }
+        }
+    }
+
     render () {
         return (
             <div>
                 <h3 style={{paddingTop: '100px', paddingBottom: '40px'}}>Register User!</h3>
-                <SignupForm/>
+                <SignupForm 
+                    register={this.props.register}
+                />
+                { this.state.msg ? 
+                <Alert 
+                    variant="danger" 
+                    style={{marginTop: '10px'}}
+                >   
+                    { this.state.msg }
+                </Alert> : null } 
             </div>
         )
     }
 }
 
-const SignupForm = () => {
-    const [show, setShow] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+RegisterUser.propTypes = {
+    isAuthenticated: propTypes.bool,
+    error: propTypes.object.isRequired,
+    register: propTypes.func.isRequired,
+    clearErrors: propTypes.func.isRequired
+}
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.error
+}); 
+
+export default connect(mapStateToProps, { register, clearErrors })(RegisterUser);
+
+const SignupForm = props => {
     const formik = useFormik({
         initialValues: {
           firstName: '',
@@ -44,17 +90,7 @@ const SignupForm = () => {
                 email: values.email,
                 password: values.password
             }
-            console.log(user)
-            axios.post('http://localhost:5000/users/add', user)
-                .then(res => console.log(res.data))
-                .catch(error => {
-                    console.log(error.response.data.msg)
-                    setErrorMessage(error.response.data.msg)
-                    setShow(true);
-                    setTimeout(() => {
-                        setShow(false);
-                    }, 4000);
-                });
+            props.register(user); 
         },
     });
     return (
@@ -125,9 +161,6 @@ const SignupForm = () => {
             <Button block size="large" type="submit">
                 Sign up
             </Button>
-            <Alert show={show} variant="danger" style={{marginTop: '10px'}}>
-                {errorMessage}
-            </Alert>
         </Form>
     );
 };
