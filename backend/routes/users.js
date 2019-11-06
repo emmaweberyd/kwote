@@ -50,7 +50,7 @@ router.route('/add').post((req,res) => {
         })
 });
 
-router.route('/login').post((req,res) => {
+router.route('/auth').post((req,res) => {
     const {email, password} = req.body;
 
     User.findOne({email})
