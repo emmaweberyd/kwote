@@ -1,7 +1,8 @@
 const router = require('express').Router();
+const auth = require('../middleware/auth');
 let Post = require('../models/post.model');
 
-router.route('/').get((req,res) => {
+router.get('/', auth, (req,res) => {
     Post.find()
         .then(posts => res.send(posts))
         .catch(err => res.status(400).send({msg: err}));
