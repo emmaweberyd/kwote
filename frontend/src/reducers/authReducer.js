@@ -17,7 +17,7 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
-    switch(action.types) {
+    switch(action.type) {
         case USER_LOADING:
             return {
                 ...state,
@@ -37,8 +37,7 @@ export default function(state = initialState, action) {
                 ...state,
                 ...action.payload,
                 isAuthenticated: true,
-                isLoading: false,
-
+                isLoading: false
             };
         case LOGIN_FAIL:
         case REGISTER_FAIL:
@@ -54,6 +53,5 @@ export default function(state = initialState, action) {
             };
         default:
             return state;
-        
     }
 }
