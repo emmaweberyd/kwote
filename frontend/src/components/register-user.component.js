@@ -31,11 +31,12 @@ class RegisterUser extends Component {
     }
 
     render () {
+        const { register } = this.props
         return (
             <div>
                 <h3 style={{paddingTop: '100px', paddingBottom: '40px'}}>Register User!</h3>
                 <SignupForm 
-                    register={this.props.register}
+                    register={register}
                 />
                 { this.state.msg ? 
                 <Alert 
@@ -58,7 +59,7 @@ RegisterUser.propTypes = {
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
-    error: state.error
+    error: state.error,
 }); 
 
 export default connect(mapStateToProps, { register, clearErrors })(RegisterUser);
