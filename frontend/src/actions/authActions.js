@@ -9,7 +9,7 @@ import {
     LOGOUT_SUCCESS,
     AUTH_ERROR
 } from './types';
-import { returnErrors } from './errorActions';
+import { returnErrors, clearErrors } from './errorActions';
 
 // check token and load user
 export const loadUser = () => (dispatch, getState) => {
@@ -37,10 +37,13 @@ export const register = ({ firstname, lastname, email, password }) => dispatch =
     const body = JSON.stringify({ firstname, lastname, email, password });
 
     axios.post('http://localhost:5000/users/add', body, config)
-        .then(res => dispatch({
-            type: REGISTER_SUCCESS,
-            payload: res.data
-        }))
+        .then(res => {
+            dispatch({
+                type: REGISTER_SUCCESS,
+                payload: res.data
+            });
+            dispatch(clearErrors());
+        })
         .catch(err => {
             dispatch(returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL'));
             dispatch({ type: REGISTER_FAIL });
