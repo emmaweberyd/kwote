@@ -8,7 +8,7 @@ router.get('/', auth, (req,res) => {
         .catch(err => res.status(400).send({msg: err}));
 });
 
-router.post('/add', (req,res) => {
+router.post('/add', auth, (req,res) => {
     const {quote} = req.body;
 
     // make sure all fields are non-empty
@@ -26,7 +26,7 @@ router.post('/add', (req,res) => {
     
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', auth, (req, res) => {
     Post.findById(req.params.id)
     .then(post => post.remove())
     .then(() => res.send({msg: 'Post deleted!'}))

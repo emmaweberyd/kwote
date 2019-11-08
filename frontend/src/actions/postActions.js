@@ -13,7 +13,7 @@ export const getPosts = () => (dispatch, getState) => {
         });
 };
 
-export const addPost = ({ quote }) => dispatch => {
+export const addPost = ({ quote }) => (dispatch, getState) => {
     const config = {
         headers: {
             "Content-type": "application/json"
@@ -22,7 +22,7 @@ export const addPost = ({ quote }) => dispatch => {
 
     const body = JSON.stringify({ quote });
 
-    axios.post('http://localhost:5000/posts/add', body, config)
+    axios.post('http://localhost:5000/posts/add', body, tokenConfig(getState))
         .then(res => {
             dispatch({
                 type: ADD_POST,
@@ -31,8 +31,9 @@ export const addPost = ({ quote }) => dispatch => {
         });
 };
 
-export const deletePost = id => dispatch => {
-    axios.delete(`http://localhost:5000/posts/${id}`).then(res =>
+export const deletePost = id => (dispatch, getState) => {
+    axios.delete(`http://localhost:5000/posts/${id}`, tokenConfig(getState))
+    .then(() =>
         dispatch({
             type: DELETE_POST,
             payload: id
