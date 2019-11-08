@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 let User = require('../models/user.model');
 const auth = require('../middleware/auth');
 
-
 router.route('/').get((req,res) => {
     User.find()
         .then(users => res.send(users))
@@ -86,6 +85,12 @@ router.post('/auth', (req,res) => {
         }  
     })
     .catch(err => res.status(400).send({msg: err}))
+});
+
+router.get('/auth', auth, (req,res) => {
+    User.findById(req.user._id)
+        .select('-password') // to not return password
+        .then(user => res.json(user));
 });
 
 module.exports = router;
