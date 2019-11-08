@@ -3,21 +3,61 @@ import { Button, Form, FormGroup, FormControl, FormLabel, Alert } from "react-bo
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
+import propTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { login } from '../actions/authActions';
+import { clearErrors } from '../actions/errorActions';
 
-export default class LoginUser extends Component {
+
+class LoginUser extends Component {
+    state = {
+        msg: null
+    }
+
+    componentDidMount() {
+        this.props.clearErrors();
+    }
+
+    componentDidUpdate(prevProps) {
+        const { error } = this.props;
+        if(error !== prevProps.error) {
+            if(error.id === 'LOGIN_FAIL') {
+                this.setState({ msg: error.msg.msg });
+                setTimeout(() => {
+                    this.setState({ msg: null });
+                }, 4000);
+            } else {
+                this.setState({ msg: null });
+            }
+        }
+    }
+
     render () {
+        const { login } = this.props;
         return (
             <div>
                 <h3 style={{paddingTop: '100px', paddingBottom: '40px'}}>Log in!</h3>
-                <LoginForm/>
+                <LoginForm login={login}/>
             </div>
         )
     }
 }
 
-const LoginForm = () => {
-    const [show, setShow] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+LoginUser.propTypes = {
+    isAuthenticated: propTypes.bool,
+    error: propTypes.object.isRequired,
+    login: propTypes.func.isRequired,
+    clearErrors: propTypes.func.isRequired
+}
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.error
+}); 
+
+export default connect(mapStateToProps, { login, clearErrors })(LoginUser);
+
+const LoginForm = props => {
     const formik = useFormik({
         initialValues: {
           email: '',
@@ -34,16 +74,7 @@ const LoginForm = () => {
                 email: values.email,
                 password: values.password
             }
-            axios.post('http://localhost:5000/users/login', user)
-                .then(res => console.log(res.data))
-                .catch(error => {
-                    console.log(error.response.data.msg);
-                    setErrorMessage(error.response.data.msg)
-                    setShow(true);
-                    setTimeout(() => {
-                        setShow(false);
-                    }, 4000);
-                });
+            props.login(user);
         },
     });
     return (
@@ -84,9 +115,6 @@ const LoginForm = () => {
             <Button block size="large" type="submit">
                 Sign up
             </Button>
-            <Alert show={show} variant="danger" style={{marginTop: '10px'}}>
-                {errorMessage}
-            </Alert>
         </Form>
     );
 };

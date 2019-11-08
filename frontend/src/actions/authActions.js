@@ -50,6 +50,29 @@ export const register = ({ firstname, lastname, email, password }) => dispatch =
         });
 }
 
+export const login = ({ email, password }) => dispatch => {
+    const config = {
+        headers: {
+            "Content-type": "application/json"
+        }
+    }
+
+    const body = JSON.stringify({ email, password });
+
+    axios.post('http://localhost:5000/users/login', body, config)
+        .then(res => {
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: res.data
+            });
+            dispatch(clearErrors());
+        })
+        .catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'));
+            dispatch({ type: LOGIN_FAIL });
+        });
+}
+
 // setup config/headers and token
 export const tokenConfig = getState => {
     const token = getState().auth.token;
