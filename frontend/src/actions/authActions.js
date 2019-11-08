@@ -73,6 +73,12 @@ export const login = ({ email, password }) => dispatch => {
         });
 }
 
+export const logout = () => {
+    return {
+        type: LOGOUT_SUCCESS
+    }
+}
+
 // setup config/headers and token
 export const tokenConfig = getState => {
     const token = getState().auth.token;
