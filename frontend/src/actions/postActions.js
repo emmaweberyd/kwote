@@ -14,11 +14,6 @@ export const getPosts = () => (dispatch, getState) => {
 };
 
 export const addPost = ({ quote }) => (dispatch, getState) => {
-    const config = {
-        headers: {
-            "Content-type": "application/json"
-        }
-    }
 
     const body = JSON.stringify({ quote });
 
