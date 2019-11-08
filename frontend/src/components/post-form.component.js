@@ -1,12 +1,32 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import { Button, Form, FormGroup, FormControl, FormLabel, Alert } from "react-bootstrap";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { addPost } from '../actions/postActions';
+import propTypes from 'prop-types';
 
-const PostForm = () => {
-    const [show, setShow] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+
+class PostForm extends Component {
+    
+    render() {
+        const { addPost } = this.props; 
+        return <PostFormField postMethod={addPost}/>
+    }
+} 
+
+PostForm.propTypes = {
+    addPost: propTypes.func.isRequired
+}
+
+const mapStateToProps = state => ({
+
+}); 
+
+export default connect(mapStateToProps,{ addPost })(PostForm);
+
+
+const PostFormField = props => {
     const formik = useFormik({
         initialValues: {
           quote: ''
@@ -19,17 +39,7 @@ const PostForm = () => {
             const post = {
                 quote: values.quote
             }
-            axios.post('http://localhost:5000/posts/add', post)
-                .then(res => console.log(res.data))
-                .catch(error => {
-                    console.log(error.response.data.msg);
-                    setErrorMessage(error.response.data.msg)
-                    setShow(true);
-                    setTimeout(() => {
-                        setShow(false);
-                    }, 4000);
-                });
-            window.location.reload();
+            props.postMethod(post);
         },
     });
     return (
@@ -55,11 +65,6 @@ const PostForm = () => {
             <Button block size="large" type="submit">
                 Post
             </Button>
-            <Alert show={show} variant="danger" style={{marginTop: '10px'}}>
-                {errorMessage}
-            </Alert>
         </Form>
     );
 };
-
-export default PostForm;

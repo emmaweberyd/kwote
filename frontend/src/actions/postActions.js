@@ -3,12 +3,31 @@ import axios from 'axios';
 
 export const getPosts = () => dispatch => {
     dispatch(setPostsLoading());
-    axios.get('http://localhost:5000/posts').then(res => 
-        dispatch({
-            type: GET_POSTS,
-            payload: res.data
-        })
-    );
+    axios.get('http://localhost:5000/posts')
+        .then(res => {
+            dispatch({
+                type: GET_POSTS,
+                payload: res.data
+            })
+        });
+};
+
+export const addPost = ({ quote }) => dispatch => {
+    const config = {
+        headers: {
+            "Content-type": "application/json"
+        }
+    }
+
+    const body = JSON.stringify({ quote });
+
+    axios.post('http://localhost:5000/posts/add', body, config)
+        .then(res => {
+            dispatch({
+                type: ADD_POST,
+                payload: res.data
+            });
+        });
 };
 
 export const deletePost = id => dispatch => {

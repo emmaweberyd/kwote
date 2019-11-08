@@ -4,11 +4,11 @@ let Post = require('../models/post.model');
 
 router.get('/', auth, (req,res) => {
     Post.find()
-        .then(posts => res.send(posts))
+        .then(posts => res.json(posts))
         .catch(err => res.status(400).send({msg: err}));
 });
 
-router.route('/add').post((req,res) => {
+router.post('/add', (req,res) => {
     const {quote} = req.body;
 
     // make sure all fields are non-empty
@@ -21,7 +21,7 @@ router.route('/add').post((req,res) => {
     });
 
     newPost.save()
-    .then(() => res.send({msg: 'Post added!'}))
+    .then(post => res.json(post))
     .catch(err => res.status(400).send({msg: err}));
     
 });
