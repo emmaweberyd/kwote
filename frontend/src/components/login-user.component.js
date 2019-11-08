@@ -1,8 +1,7 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { Button, Form, FormGroup, FormControl, FormLabel, Alert } from "react-bootstrap";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import axios from 'axios';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { login } from '../actions/authActions';
@@ -38,6 +37,13 @@ class LoginUser extends Component {
             <div>
                 <h3 style={{paddingTop: '100px', paddingBottom: '40px'}}>Log in!</h3>
                 <LoginForm login={login}/>
+                { this.state.msg ? 
+                <Alert 
+                    variant="danger" 
+                    style={{marginTop: '10px'}}
+                >   
+                    { this.state.msg }
+                </Alert> : null } 
             </div>
         )
     }
