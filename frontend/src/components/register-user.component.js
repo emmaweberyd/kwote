@@ -6,6 +6,8 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { register } from '../actions/authActions';
 import { clearErrors } from '../actions/errorActions';
+import { Link } from "react-router-dom";
+
 
 class RegisterUser extends Component {
     state = {
@@ -34,7 +36,8 @@ class RegisterUser extends Component {
         const { register } = this.props
         return (
             <div>
-                <h3 style={{paddingTop: '100px', paddingBottom: '40px'}}>Register User!</h3>
+                <h3 style={{paddingTop: '100px'}}>Register User!</h3>
+                <div style={{paddingTop: '20px', paddingBottom: '20px'}}>Already have an account?&nbsp;<Link to="/login">Login here!</Link></div>
                 <SignupForm 
                     register={register}
                 />
