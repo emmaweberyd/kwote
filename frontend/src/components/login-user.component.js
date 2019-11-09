@@ -7,8 +7,7 @@ import { connect } from 'react-redux';
 import { login } from '../actions/authActions';
 import { clearErrors } from '../actions/errorActions';
 import { Link } from "react-router-dom";
-
-
+import { Redirect } from 'react-router'
 
 class LoginUser extends Component {
     state = {
@@ -34,21 +33,25 @@ class LoginUser extends Component {
     }
 
     render () {
-        const { login } = this.props;
-        return (
-            <div>
-                <h1 style={{paddingTop: '100px'}}>Log in</h1>
-                <div style={{paddingTop: '20px', paddingBottom: '20px'}}>Don't have an account?&nbsp;<Link to="/register">Register here!</Link></div>
-                <LoginForm login={login}/>
-                { this.state.msg ? 
-                <Alert 
-                    variant="danger" 
-                    style={{marginTop: '10px'}}
-                >   
-                    { this.state.msg }
-                </Alert> : null } 
-            </div>
-        )
+        const { login, isAuthenticated } = this.props;
+        if(isAuthenticated) {
+            return <Redirect to="/"/>
+        } else {
+            return (
+                <div>
+                    <h1 style={{paddingTop: '100px'}}>Log in</h1>
+                    <div style={{paddingTop: '20px', paddingBottom: '20px'}}>Don't have an account?&nbsp;<Link to="/register">Register here!</Link></div>
+                    <LoginForm login={login}/>
+                    { this.state.msg ? 
+                    <Alert 
+                        variant="danger" 
+                        style={{marginTop: '10px'}}
+                    >   
+                        { this.state.msg }
+                    </Alert> : null } 
+                </div>
+            )
+        }
     }
 }
 
