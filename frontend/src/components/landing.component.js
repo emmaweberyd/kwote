@@ -14,7 +14,7 @@ import PostForm from './post-form.component';
 import { logout } from '../actions/authActions';
 
 
-class Posts extends Component {
+class Landing extends Component {
 
     componentDidMount() {
         this.props.getPosts();
@@ -56,7 +56,7 @@ class Posts extends Component {
     }
 }
 
-Posts.propTypes = {
+Landing.propTypes = {
     getPosts: propTypes.func.isRequired,
     post: propTypes.object.isRequired,
     logout: propTypes.func.isRequired
@@ -66,5 +66,5 @@ const mapStateToProps = (state) => ({
     post: state.post
 });
 
-export default connect(mapStateToProps, { getPosts, deletePost, logout })(Posts);
+export default connect(mapStateToProps, { getPosts, deletePost, logout })(Landing);
 
