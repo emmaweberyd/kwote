@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { register } from '../actions/authActions';
 import { clearErrors } from '../actions/errorActions';
 import { Link } from "react-router-dom";
+import { Redirect } from 'react-router'
 
 
 class RegisterUser extends Component {
@@ -33,23 +34,27 @@ class RegisterUser extends Component {
     }
 
     render () {
-        const { register } = this.props
-        return (
-            <div>
-                <h3 style={{paddingTop: '100px'}}>Register User!</h3>
-                <div style={{paddingTop: '20px', paddingBottom: '20px'}}>Already have an account?&nbsp;<Link to="/login">Login here!</Link></div>
-                <SignupForm 
-                    register={register}
-                />
-                { this.state.msg ? 
-                <Alert 
-                    variant="danger" 
-                    style={{marginTop: '10px'}}
-                >   
-                    { this.state.msg }
-                </Alert> : null } 
-            </div>
-        )
+        const { register, isAuthenticated } = this.props
+        if (isAuthenticated) {
+            return <Redirect to="/"/>
+        } else {
+            return (
+                <div>
+                    <h3 style={{paddingTop: '100px'}}>Register User!</h3>
+                    <div style={{paddingTop: '20px', paddingBottom: '20px'}}>Already have an account?&nbsp;<Link to="/login">Login here!</Link></div>
+                    <SignupForm 
+                        register={register}
+                    />
+                    { this.state.msg ? 
+                    <Alert 
+                        variant="danger" 
+                        style={{marginTop: '10px'}}
+                    >   
+                        { this.state.msg }
+                    </Alert> : null } 
+                </div>
+            );
+        }
     }
 }
 
