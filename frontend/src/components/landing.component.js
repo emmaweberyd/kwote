@@ -9,6 +9,8 @@ import propTypes from 'prop-types';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import PostForm from './post-form.component';
+import { Redirect } from 'react-router'
+
 
 // FOR LOGOUT
 import { logout } from '../actions/authActions';
@@ -30,39 +32,46 @@ class Landing extends Component {
     }
 
     render() {
-       const { posts } = this.props.post;
-        return (
-            <div>
-            <Button onClick={this.onLogout}>Logout</Button>
-            <PostForm/>
-            <List dense>
-                {posts.map(({_id, quote}) => {
-                    return (
-                    <ListItem key={_id} button>
-                        <ListItemText primary={quote} />
-                        <IconButton 
-                            onClick={this.onDelete.bind(this,_id)} 
-                            edge="end" 
-                            aria-label="delete"
-                        >
-                            <DeleteIcon />
-                        </IconButton>
-                    </ListItem>
-                    );
-                })}
-            </List>
-            </div>
-        );
+        const { posts } = this.props.post;
+        const { isAuthenticated } = this.props;
+        if(isAuthenticated) {
+            return (
+                <div>
+                    <Button onClick={this.onLogout}>Logout</Button>
+                    <PostForm/>
+                    <List dense>
+                        {posts.map(({_id, quote}) => {
+                            return (
+                            <ListItem key={_id} button>
+                                <ListItemText primary={quote} />
+                                <IconButton 
+                                    onClick={this.onDelete.bind(this,_id)} 
+                                    edge="end" 
+                                    aria-label="delete"
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                            </ListItem>
+                            );
+                        })}
+                    </List>
+                </div>
+            );
+        } else {
+            return <Redirect to="/login"/>; // redirect to login when session ends
+        }
     }
 }
 
 Landing.propTypes = {
+    isAuthenticated: propTypes.bool,
     getPosts: propTypes.func.isRequired,
     post: propTypes.object.isRequired,
     logout: propTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated,
     post: state.post
 });
 
