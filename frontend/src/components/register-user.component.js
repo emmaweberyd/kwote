@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 import { register } from '../actions/authActions';
 import { clearErrors } from '../actions/errorActions';
 import { Link } from "react-router-dom";
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
+import { FormWrapper } from './form-wrapper';
 
 
 class RegisterUser extends Component {
@@ -40,18 +41,19 @@ class RegisterUser extends Component {
         } else {
             return (
                 <div>
-                    <h3 style={{paddingTop: '100px'}}>Register User!</h3>
-                    <div style={{paddingTop: '20px', paddingBottom: '20px'}}>Already have an account?&nbsp;<Link to="/login">Login here!</Link></div>
-                    <SignupForm 
-                        register={register}
-                    />
-                    { this.state.msg ? 
-                    <Alert 
-                        variant="danger" 
-                        style={{marginTop: '10px'}}
-                    >   
-                        { this.state.msg }
-                    </Alert> : null } 
+                    <FormWrapper>
+                        <h2>Register User!</h2>
+                        <div style={{paddingTop: '20px', paddingBottom: '20px'}}>
+                            Already have an account?&nbsp;
+                            <Link to="/login">Login here!</Link>
+                        </div>
+                        <SignupForm register={register}/>
+                        { this.state.msg ? 
+                        <Alert variant="danger" style={{marginTop: '20px'}}>   
+                            { this.state.msg }
+                        </Alert> : null } 
+                    </FormWrapper>
+                    
                 </div>
             );
         }
@@ -173,3 +175,4 @@ const SignupForm = props => {
         </Form>
     );
 };
+

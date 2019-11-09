@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, FormControl, FormLabel, Alert, Jumbotron } from "react-bootstrap";
+import { Button, Form, FormGroup, FormControl, FormLabel, Alert } from "react-bootstrap";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import propTypes from 'prop-types';
@@ -7,8 +7,8 @@ import { connect } from 'react-redux';
 import { login } from '../actions/authActions';
 import { clearErrors } from '../actions/errorActions';
 import { Link } from "react-router-dom";
-import { Redirect } from 'react-router'
-
+import { Redirect } from 'react-router';
+import { FormWrapper } from './form-wrapper';
 
 class LoginUser extends Component {
     state = {
@@ -40,21 +40,18 @@ class LoginUser extends Component {
         } else {
             return (
                 <div>
-                    <Jumbotron style={{marginLeft: 'auto', marginRight: 'auto', width: '400px'}}>
+                    <FormWrapper>
                         <h1>Log in</h1>
                         <div style={{paddingTop: '20px', paddingBottom: '20px'}}>
                             Don't have an account?&nbsp;
                             <Link to="/register">Register here!</Link>
                         </div>
                         <LoginForm login={login}/>
-                    </Jumbotron>
-                    { this.state.msg ? 
-                    <Alert 
-                        variant="danger" 
-                        style={{marginTop: '10px'}}
-                    >   
-                        { this.state.msg }
-                    </Alert> : null } 
+                        { this.state.msg ? 
+                        <Alert variant="danger" style={{marginTop: '20px'}}>   
+                            { this.state.msg }
+                        </Alert> : null } 
+                    </FormWrapper>
                 </div>
             )
         }
@@ -131,7 +128,7 @@ const LoginForm = props => {
                 </Form.Control.Feedback>
             </FormGroup>
             <Button block size="large" type="submit">
-                Sign up
+                Log in
             </Button>
         </Form>
     );

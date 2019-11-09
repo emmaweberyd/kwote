@@ -5,11 +5,12 @@ import store from './store';
 import { loadUser } from '../src/actions/authActions';
 import { Component } from 'react';
 import styled from '@emotion/styled';
-import core from '@emotion/core';
 
 import Landing from './components/landing.component';
 import RegisterUser from './components/register-user.component';
 import LoginUser from './components/login-user.component';
+
+import img from '../src/img/gradient.webp';
 
 class App extends Component {
   componentDidMount() {
@@ -41,8 +42,11 @@ let AppWrapper = styled.div({
 });
 
 let AuthWrapper = styled.div({
-  display: 'table-cell', 
-  verticalAlign: 'middle'
-})
+  backgroundImage: `url(${img})`,
+  '@media (min-height: 650px)': {
+    display: 'table-cell', 
+    verticalAlign: 'middle'
+  }
+});
 
 export default App;
