@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 import store from './store';
 import { loadUser } from '../src/actions/authActions';
 import { Component } from 'react';
+import styled from '@emotion/styled';
+import core from '@emotion/core';
 
 import Landing from './components/landing.component';
 import RegisterUser from './components/register-user.component';
@@ -18,15 +20,29 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <div className="container">
+          <AppWrapper>
             <Route exact path="/" component={Landing}/>
-            <Route exact path="/register" component={RegisterUser}/>
-            <Route exact path="/login" component={LoginUser}/>
-          </div>
+            <AuthWrapper>
+              <Route exact path="/register" component={RegisterUser}/>
+              <Route exact path="/login" component={LoginUser}/>
+            </AuthWrapper>
+          </AppWrapper>
         </Router>
       </Provider>
     );
   }
 }
+
+let AppWrapper = styled.div({
+  position: 'absolute',
+  display: 'table',
+  height: '100%',
+  width: '100%'
+});
+
+let AuthWrapper = styled.div({
+  display: 'table-cell', 
+  verticalAlign: 'middle'
+})
 
 export default App;
