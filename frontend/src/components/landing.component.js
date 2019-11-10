@@ -10,11 +10,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import PostForm from './post-form.component';
 import { Redirect } from 'react-router'
+import NavBar from './navbar.component';
 
 
 // FOR LOGOUT
 import { logout } from '../actions/authActions';
-
 
 class Landing extends Component {
 
@@ -36,7 +36,8 @@ class Landing extends Component {
         const { isAuthenticated } = this.props;
         if(isAuthenticated) {
             return (
-                <div>
+                <div>  
+                    <NavBar/>
                     <Button onClick={this.onLogout}>Logout</Button>
                     <PostForm/>
                     <List dense>
