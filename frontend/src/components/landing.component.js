@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import PostForm from './post-form.component';
 import { Redirect } from 'react-router'
 import NavBar from './navbar.component';
+import { Row, Col } from "react-bootstrap";
 
 class Landing extends Component {
 
@@ -28,23 +29,31 @@ class Landing extends Component {
             return (
                 <div>  
                     <NavBar/>
-                    <PostForm/>
-                    <List dense>
-                        {posts.map(({_id, quote}) => {
-                            return (
-                            <ListItem key={_id} button>
-                                <ListItemText primary={quote} />
-                                <IconButton 
-                                    onClick={this.onDelete.bind(this,_id)} 
-                                    edge="end" 
-                                    aria-label="delete"
-                                >
-                                    <DeleteIcon />
-                                </IconButton>
-                            </ListItem>
-                            );
-                        })}
-                    </List>
+                    <div className="container-fluid">
+                        <Row>
+                            <Col xs="12" sm="3"></Col>
+                            <Col xs="12" sm="6" style={{marginTop: '20px'}}>
+                                <PostForm/>
+                                <List dense>
+                                    {posts.map(({_id, quote}) => {
+                                        return (
+                                        <ListItem key={_id} button>
+                                            <ListItemText primary={quote} />
+                                            <IconButton 
+                                                onClick={this.onDelete.bind(this,_id)} 
+                                                edge="end" 
+                                                aria-label="delete"
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </ListItem>
+                                        );
+                                    })}
+                                </List>
+                            </Col>
+                            <Col xs="12" sm="3"></Col>
+                        </Row>
+                    </div>
                 </div>
             );
         } else {

@@ -20,7 +20,7 @@ class NavBar extends Component {
 		return (
 			<Navbar 
 				className="bg-dark justify-content-between" 
-				style={{height: '80px', marginBottom: '20px'}}
+				style={{height: '80px'}}
 			>
 				<Link to="/" style={{color: 'white'}}>
 					<FormatQuoteOutlinedIcon style={{color: 'inherit'}}/>

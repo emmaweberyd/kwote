@@ -48,7 +48,6 @@ const PostFormField = props => {
             onSubmit={formik.handleSubmit}
         >
             <FormGroup size="large">
-                <FormLabel>Quote</FormLabel>
                 <FormControl
                     autoFocus
                     required 
