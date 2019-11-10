@@ -5,6 +5,7 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logout } from '../actions/authActions';
 import { Button } from "react-bootstrap";
+import FormatQuoteOutlinedIcon from '@material-ui/icons/FormatQuoteOutlined';
 
 
 class NavBar extends Component {
@@ -21,8 +22,9 @@ class NavBar extends Component {
 				className="bg-dark justify-content-between" 
 				style={{height: '80px', marginBottom: '20px'}}
 			>
-				<Link to="/">
-					<Navbar.Brand style={{color: 'white'}}>KWOTE
+				<Link to="/" style={{color: 'white'}}>
+					<FormatQuoteOutlinedIcon style={{color: 'inherit'}}/>
+					<Navbar.Brand style={{color: 'inherit'}}>KWOTE
 					</Navbar.Brand>
 				</Link>
 				<Nav>
