@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button } from "react-bootstrap";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -12,10 +11,6 @@ import PostForm from './post-form.component';
 import { Redirect } from 'react-router'
 import NavBar from './navbar.component';
 
-
-// FOR LOGOUT
-import { logout } from '../actions/authActions';
-
 class Landing extends Component {
 
     componentDidMount() {
@@ -26,11 +21,6 @@ class Landing extends Component {
         this.props.deletePost(id);
     }
 
-    onLogout = () => {
-        const { logout } = this.props;
-        logout();
-    }
-
     render() {
         const { posts } = this.props.post;
         const { isAuthenticated } = this.props;
@@ -38,7 +28,6 @@ class Landing extends Component {
             return (
                 <div>  
                     <NavBar/>
-                    <Button onClick={this.onLogout}>Logout</Button>
                     <PostForm/>
                     <List dense>
                         {posts.map(({_id, quote}) => {
@@ -68,7 +57,6 @@ Landing.propTypes = {
     isAuthenticated: propTypes.bool,
     getPosts: propTypes.func.isRequired,
     post: propTypes.object.isRequired,
-    logout: propTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -76,5 +64,5 @@ const mapStateToProps = (state) => ({
     post: state.post
 });
 
-export default connect(mapStateToProps, { getPosts, deletePost, logout })(Landing);
+export default connect(mapStateToProps, { getPosts, deletePost })(Landing);
 
