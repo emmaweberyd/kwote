@@ -42,10 +42,12 @@ let AppWrapper = styled.div({
 });
 
 let AuthWrapper = styled.div({
-  backgroundImage: `url(${img})`,
   '@media (min-height: 650px)': {
     display: 'table-cell', 
-    verticalAlign: 'middle'
+    verticalAlign: 'middle',
+    '@media (min-width: 650px)': {
+      backgroundImage: `url(${img})`
+    } 
   }
 });
 
