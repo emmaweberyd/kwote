@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { Button, Form, FormGroup, FormControl } from "react-bootstrap";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { connect } from 'react-redux';
