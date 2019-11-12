@@ -19,8 +19,8 @@ class NavBar extends Component {
 		const { firstname, lastname } = this.props.user
 		return (
 			<Navbar 
-				className="bg-dark justify-content-between" 
-				style={{height: '80px'}}
+				className="justify-content-between" 
+				style={{height: '80px', borderBottom: '1px solid #323B45'}}
 			>
 				<Link to="/" style={{color: 'white'}}>
 					<FormatQuoteOutlinedIcon style={{color: 'inherit'}}/>

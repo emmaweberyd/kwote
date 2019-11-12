@@ -32,9 +32,9 @@ class Landing extends Component {
                     <div className="container-fluid">
                         <Row>
                             <Col xs="12" sm="3"></Col>
-                            <Col xs="12" sm="6" style={{marginTop: '20px'}}>
+                            <Col xs="12" sm="6" style={{paddingTop: '20px'}}>
                                 <PostForm/>
-                                <List dense>
+                                <List dense style={{color: 'white'}}>
                                     {posts.map(({_id, quote}) => {
                                         return (
                                         <ListItem key={_id} button>
