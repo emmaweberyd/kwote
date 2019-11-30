@@ -21,13 +21,29 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <AppWrapper>
-            <Route exact path="/" component={Landing}/>
-            <AuthWrapper>
-              <Route exact path="/register" component={RegisterUser}/>
-              <Route exact path="/login" component={LoginUser}/>
-            </AuthWrapper>
-          </AppWrapper>
+          <Route exact path="/" component={Landing}/>
+          <Route 
+            exact 
+            path="/register" 
+            render={() => (
+              <AppWrapper>
+                <AuthWrapper>
+                  <RegisterUser/>
+                </AuthWrapper>
+              </AppWrapper>
+            )}
+          />
+          <Route 
+            exact 
+            path="/login" 
+            render={() => (
+              <AppWrapper>
+                <AuthWrapper>
+                  <LoginUser/>
+                </AuthWrapper>
+              </AppWrapper>
+            )}
+          />
         </Router>
       </Provider>
     );
