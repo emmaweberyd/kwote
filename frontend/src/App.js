@@ -22,9 +22,11 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <AppWrapper>
-            <LandingWrapper>
-              <Route exact path="/" component={Landing}/>
-            </LandingWrapper>
+            
+            <Route exact path="/" 
+              component={<LandingWrapper><Landing/></LandingWrapper>}
+            />
+            
             <AuthWrapper>
               <Route exact path="/register" component={RegisterUser}/>
               <Route exact path="/login" component={LoginUser}/>
@@ -53,7 +55,8 @@ let AuthWrapper = styled.div({
     display: 'table-cell', 
     verticalAlign: 'middle',
     '@media (min-width: 650px)': {
-      backgroundImage: `url(${img})`
+      backgroundImage: `url(${img})`,
+      backgroundSize: 'cover'
     } 
   }
 });
