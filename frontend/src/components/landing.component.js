@@ -10,8 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import PostForm from './post-form.component';
 import { Redirect } from 'react-router'
 import NavBar from './navbar.component';
-import { Row, Col } from "react-bootstrap";
-import styled from '@emotion/styled';
+import { Row, Col, Card } from "react-bootstrap";
 
 
 class Landing extends Component {
@@ -29,19 +28,22 @@ class Landing extends Component {
         const { isAuthenticated } = this.props;
         if(isAuthenticated) {
             return (
-                <LandingWrapper>
-                    <div>  
-                        <NavBar/>
-                        <div className="container-fluid">
-                            <Row>
-                                <Col xs="12" sm="3"></Col>
-                                <Col xs="12" sm="6" style={{paddingTop: '20px'}}>
-                                    <PostForm/>
-                                    <List dense style={{color: 'white'}}>
-                                        {posts.map(({_id, quote}) => {
-                                            return (
-                                            <ListItem key={_id} button>
-                                                <ListItemText primary={quote} />
+                <div>  
+                    <NavBar/>
+                    <div className="container-fluid">
+                        <Row>
+                            <Col xs="12" sm="3"></Col>
+                            <Col xs="12" sm="6" style={{paddingTop: '20px'}}>
+                                <PostForm/>
+                                <List dense style={{color: 'white'}}>
+                                    {posts.map(({_id, quote}) => {
+                                        return (
+                                        <ListItem key={_id} style={{paddingLeft: '0', paddingRight: '0'}}>
+                                            <Card body style={{backgroundColor: '#323B45', width: 'inherit'}}>
+                                                <p>"{quote}"</p>
+                                                <footer className="blockquote-footer">
+                                                    Anonymous
+                                                </footer>
                                                 <IconButton 
                                                     onClick={this.onDelete.bind(this,_id)} 
                                                     edge="end" 
@@ -49,16 +51,16 @@ class Landing extends Component {
                                                 >
                                                     <DeleteIcon />
                                                 </IconButton>
-                                            </ListItem>
-                                            );
-                                        })}
-                                    </List>
-                                </Col>
-                                <Col xs="12" sm="3"></Col>
-                            </Row>
-                        </div>
+                                            </Card>
+                                        </ListItem>
+                                        );
+                                    })}
+                                </List>
+                            </Col>
+                            <Col xs="12" sm="3"></Col>
+                        </Row>
                     </div>
-                </LandingWrapper>
+                </div>
             );
         } else {
             return <Redirect to="/login"/>; // redirect to login when session ends
@@ -78,8 +80,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { getPosts, deletePost })(Landing);
-
-let LandingWrapper = styled.div({
-    backgroundColor: '#1e2833',
-    height: '100vh'
-});
