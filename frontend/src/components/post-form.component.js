@@ -29,7 +29,8 @@ export default connect(mapStateToProps,{ addPost })(PostForm);
 
 const PostFormField = props => {
     const [isOpen, setIsOpen] = useState(false);
-    const toggle = () => setIsOpen(!isOpen);
+    const toggle = () => setIsOpen(true);
+    const unToggle = () => setIsOpen(false);
 
     const formik = useFormik({
         initialValues: {
@@ -44,6 +45,7 @@ const PostFormField = props => {
                 quote: values.quote
             }
             props.postMethod(post);
+            unToggle();
         },
     });
     return (
@@ -65,7 +67,8 @@ const PostFormField = props => {
                     value={formik.values.quote || ''}
                     onChange={formik.handleChange}
                     //isInvalid={formik.touched.quote && formik.errors.quote}
-                    onClick={toggle}
+                    onFocus={toggle}
+                    onBlur={unToggle}
 
                 />
                 {/* <Form.Control.Feedback type="invalid">
@@ -75,7 +78,7 @@ const PostFormField = props => {
             <Collapse isOpen={isOpen}>
                 <Card style={{backgroundColor: '#1e2833'}}>
                     <CardBody>
-                        <Button block size="large" type="submit">
+                        <Button block size="large" type="submit" onFocus={toggle}>
                             Post
                         </Button>
                     </CardBody>
