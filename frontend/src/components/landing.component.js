@@ -11,6 +11,8 @@ import PostForm from './post-form.component';
 import { Redirect } from 'react-router'
 import NavBar from './navbar.component';
 import { Row, Col } from "react-bootstrap";
+import styled from '@emotion/styled';
+
 
 class Landing extends Component {
 
@@ -27,34 +29,36 @@ class Landing extends Component {
         const { isAuthenticated } = this.props;
         if(isAuthenticated) {
             return (
-                <div>  
-                    <NavBar/>
-                    <div className="container-fluid">
-                        <Row>
-                            <Col xs="12" sm="3"></Col>
-                            <Col xs="12" sm="6" style={{paddingTop: '20px'}}>
-                                <PostForm/>
-                                <List dense style={{color: 'white'}}>
-                                    {posts.map(({_id, quote}) => {
-                                        return (
-                                        <ListItem key={_id} button>
-                                            <ListItemText primary={quote} />
-                                            <IconButton 
-                                                onClick={this.onDelete.bind(this,_id)} 
-                                                edge="end" 
-                                                aria-label="delete"
-                                            >
-                                                <DeleteIcon />
-                                            </IconButton>
-                                        </ListItem>
-                                        );
-                                    })}
-                                </List>
-                            </Col>
-                            <Col xs="12" sm="3"></Col>
-                        </Row>
+                <LandingWrapper>
+                    <div>  
+                        <NavBar/>
+                        <div className="container-fluid">
+                            <Row>
+                                <Col xs="12" sm="3"></Col>
+                                <Col xs="12" sm="6" style={{paddingTop: '20px'}}>
+                                    <PostForm/>
+                                    <List dense style={{color: 'white'}}>
+                                        {posts.map(({_id, quote}) => {
+                                            return (
+                                            <ListItem key={_id} button>
+                                                <ListItemText primary={quote} />
+                                                <IconButton 
+                                                    onClick={this.onDelete.bind(this,_id)} 
+                                                    edge="end" 
+                                                    aria-label="delete"
+                                                >
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </ListItem>
+                                            );
+                                        })}
+                                    </List>
+                                </Col>
+                                <Col xs="12" sm="3"></Col>
+                            </Row>
+                        </div>
                     </div>
-                </div>
+                </LandingWrapper>
             );
         } else {
             return <Redirect to="/login"/>; // redirect to login when session ends
@@ -75,3 +79,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, { getPosts, deletePost })(Landing);
 
+let LandingWrapper = styled.div({
+    backgroundColor: '#1e2833',
+    height: '100vh'
+});

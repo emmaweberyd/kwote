@@ -22,11 +22,7 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <AppWrapper>
-            
-            <Route exact path="/" 
-              component={<LandingWrapper><Landing/></LandingWrapper>}
-            />
-            
+            <Route exact path="/" component={Landing}/>
             <AuthWrapper>
               <Route exact path="/register" component={RegisterUser}/>
               <Route exact path="/login" component={LoginUser}/>
@@ -43,11 +39,6 @@ let AppWrapper = styled.div({
   display: 'table',
   height: '100%',
   width: '100%'
-});
-
-let LandingWrapper = styled.div({
-  backgroundColor: '#1e2833',
-  height: '100vh'
 });
 
 let AuthWrapper = styled.div({
