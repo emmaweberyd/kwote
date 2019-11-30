@@ -58,6 +58,7 @@ let AppWrapper = styled.div({
 });
 
 let AuthWrapper = styled.div({
+  backgroundColor: 'white',
   '@media (min-height: 650px)': {
     display: 'table-cell', 
     verticalAlign: 'middle',
