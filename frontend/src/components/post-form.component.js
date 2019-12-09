@@ -56,6 +56,7 @@ const PostFormField = props => {
         >   
             <FormGroup size="large">
                 <FormControl
+                    placeholder="What did your friend say?"
                     autoComplete="off"
                     style={{
                         backgroundColor: '#323B45',
