@@ -45,6 +45,7 @@ const PostFormField = props => {
                 quote: values.quote
             }
             props.postMethod(post);
+            formik.values.quote = ''; // clear input field
             unToggle();
         },
     });
@@ -66,14 +67,10 @@ const PostFormField = props => {
                     name="quote"
                     value={formik.values.quote || ''}
                     onChange={formik.handleChange}
-                    //isInvalid={formik.touched.quote && formik.errors.quote}
                     onFocus={toggle}
                     onBlur={unToggle}
 
                 />
-                {/* <Form.Control.Feedback type="invalid">
-                    {formik.errors.quote}
-                </Form.Control.Feedback> */}
             </FormGroup>
             <Collapse isOpen={isOpen}>
                 <Card style={{backgroundColor: '#1e2833'}}>
