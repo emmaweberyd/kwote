@@ -93,4 +93,20 @@ router.get('/auth', auth, (req,res) => {
         .then(user => res.json(user));
 });
 
+router.post('/add-friend', (req,res) => {
+    const { _id , reciever_id } = req.body;
+    User.requestFriend(_id, reciever_id, function(err, friendships) {
+        if(err) return res.status(400).send({msg: err});
+        else return res.json(friendships);
+    });
+}); 
+
+router.post('/get-friends', (req, res) => {
+    const { _id } = req.body;
+    User.getFriends(_id, function(err, friendships) {
+        if(err) return res.status(400).send({msg: err});
+        else return res.json(friendships);
+    });
+});
+
 module.exports = router;

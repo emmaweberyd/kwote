@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+var friends = require("mongoose-friends")
 const uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
@@ -65,5 +66,6 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
 };
 
 UserSchema.plugin(uniqueValidator, {message: 'is already taken.'});
+UserSchema.plugin(friends());
 const User = mongoose.model('User', UserSchema);
 module.exports = User;
