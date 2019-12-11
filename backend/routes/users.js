@@ -103,7 +103,7 @@ router.post('/add-friend', (req,res) => {
 
 router.post('/get-friends', (req, res) => {
     const { _id } = req.body;
-    User.getFriends(_id, function(err, friendships) {
+    User.getAcceptedFriends(_id, {}, { firstname: 1, lastname: 1 }, function(err, friendships) {
         if(err) return res.status(400).send({msg: err});
         else return res.json(friendships);
     });
