@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import { connect } from 'react-redux';
 import { getPosts, deletePost } from '../actions/postActions';
 import propTypes from 'prop-types';
@@ -36,13 +35,13 @@ class Landing extends Component {
                             <Col xs="12" sm="6" style={{paddingTop: '20px'}}>
                                 <PostForm/>
                                 <List dense style={{color: 'white'}}>
-                                    {posts.map(({_id, quote}) => {
+                                    {posts.map(({_id, quote, quotee}) => {
                                         return (
                                         <ListItem key={_id} style={{paddingLeft: '0', paddingRight: '0'}}>
                                             <Card body style={{backgroundColor: '#323B45', width: 'inherit'}}>
                                                 <p>"{quote}"</p>
                                                 <footer className="blockquote-footer">
-                                                    Anonymous
+                                                    {quotee}
                                                 </footer>
                                                 <IconButton 
                                                     onClick={this.onDelete.bind(this,_id)} 

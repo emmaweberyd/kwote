@@ -13,9 +13,9 @@ export const getPosts = () => (dispatch, getState) => {
         });
 };
 
-export const addPost = ({ quote }) => (dispatch, getState) => {
+export const addPost = ({ quote, quotee }) => (dispatch, getState) => {
 
-    const body = JSON.stringify({ quote });
+    const body = JSON.stringify({ quote, quotee });
 
     axios.post('http://localhost:5000/posts/add', body, tokenConfig(getState))
         .then(res => {

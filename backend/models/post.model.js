@@ -6,6 +6,10 @@ const PostSchema = new Schema({
         type: String,
         required: true
     },
+    quotee: {
+        type: String,
+        default: "Anonymous"
+    },
 }, {
     timestamps: true,
 });

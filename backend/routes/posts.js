@@ -9,16 +9,14 @@ router.get('/', auth, (req,res) => {
 });
 
 router.post('/add', auth, (req,res) => {
-    const {quote} = req.body;
+    const {quote, quotee} = req.body;
 
     // make sure all fields are non-empty
     if(!quote){
         return res.status(400).send({msg: 'Enter all fields'});
     }
 
-    const newPost = new Post({
-        quote
-    });
+    const newPost = new Post({quote, quotee});
 
     newPost.save()
     .then(post => res.json(post))

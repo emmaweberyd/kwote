@@ -42,11 +42,13 @@ const PostFormField = props => {
         },
         validationSchema: yup.object({
             quote: yup.string()
-                .required('Quote is required')
+                .required('Quote is required'),
+            quotee: yup.string()
         }),
         onSubmit: values => {
             const post = {
-                quote: values.quote
+                quote: values.quote,
+                quotee: values.quotee
             }
             props.postMethod(post);
             formik.values.quote = ''; // clear input field
@@ -81,9 +83,18 @@ const PostFormField = props => {
                 <Row>
                     <Col style={{position: 'relative', float: 'left'}}>
                     <FormGroup size="large">
-                        <Input type="select" onFocus={toggle} onBlur={unToggle}>
+                        <Input 
+                            type="select" 
+                            name="quotee"
+                            value={formik.values.quotee} 
+                            onChange={formik.handleChange}
+                            onFocus={toggle} 
+                            onBlur={unToggle}
+                        >
+                            <option label="Anonymous"/>
                             {friends.map(({_id, friend}) => {
-                                return <option key={_id}>{friend.firstname + " " + friend.lastname}</option>;
+                                const name = friend.firstname + " " + friend.lastname;
+                                return <option key={_id} value={name} label={name}/>;
                             })}
                         </Input>
                     </FormGroup>
