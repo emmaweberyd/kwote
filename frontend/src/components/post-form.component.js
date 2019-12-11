@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { Button, Form, FormGroup, FormControl } from "react-bootstrap";
+import { Button, Form, FormGroup, FormControl, Row, Col } from "react-bootstrap";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { connect } from 'react-redux';
@@ -7,21 +7,24 @@ import { addPost } from '../actions/postActions';
 import propTypes from 'prop-types';
 
 // for foldout form
-import { Collapse, Card, CardBody } from 'reactstrap';
+import { Collapse, Input } from 'reactstrap';
 
 class PostForm extends Component {
+    
     render() {
         const { addPost } = this.props; 
-        return <PostFormField postMethod={addPost}/>
+        const { friends } = this.props.user;
+        return <PostFormField postMethod={addPost} friends={friends}/>
     }
 } 
 
 PostForm.propTypes = {
-    addPost: propTypes.func.isRequired
+    addPost: propTypes.func.isRequired,
+    user: propTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-
+    user: state.auth.user
 }); 
 
 export default connect(mapStateToProps,{ addPost })(PostForm);
@@ -31,6 +34,7 @@ const PostFormField = props => {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(true);
     const unToggle = () => setIsOpen(false);
+    const { friends } = props;
 
     const formik = useFormik({
         initialValues: {
@@ -74,13 +78,20 @@ const PostFormField = props => {
                 />
             </FormGroup>
             <Collapse isOpen={isOpen}>
-                <Card style={{backgroundColor: '#1e2833'}}>
-                    <CardBody>
-                        <Button block size="large" type="submit" onFocus={toggle}>
-                            Post
-                        </Button>
-                    </CardBody>
-                </Card>
+                <Row>
+                    <Col style={{position: 'relative', float: 'left'}}>
+                    <FormGroup size="large">
+                        <Input type="select" onFocus={toggle} onBlur={unToggle}>
+                            {friends.map(({_id, friend}) => {
+                                return <option key={_id}>{friend.firstname + " " + friend.lastname}</option>;
+                            })}
+                        </Input>
+                    </FormGroup>
+                    </Col>
+                    <Col>
+                        <Button block type="submit" onFocus={toggle}>Post</Button>
+                    </Col>
+                </Row>
             </Collapse>
         </Form>
     );
