@@ -36,15 +36,22 @@ router.route('/add').post((req,res) => {
 
             newUser.save()
             .then(user => {
-                const payload = {
+                const user_payload = {
                     _id: user._id,
                     firstname: user.firstname,
                     lastname: user.lastname,
                     email: user.email
                 }
-                let token = jwt.sign(payload, process.env.SECRET_KEY, {
+                let token = jwt.sign(user_payload, process.env.SECRET_KEY, {
                     expiresIn: 1440
                 })
+                const payload = {
+                    _id: user._id,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    email: user.email,
+                    friends: user.friends
+                }
                 res.json({
                     token,
                     user: payload
@@ -72,9 +79,18 @@ router.post('/auth', (req,res) => {
                     let token = jwt.sign(payload, process.env.SECRET_KEY, {
                         //expiresIn: 1440
                     })
-                    res.json({
-                        token,
-                        user: payload
+                    User.getAcceptedFriends(user._id, {}, { firstname: 1, lastname: 1 }, function(err, friendships) {
+                        var payload = {
+                            _id: user._id,
+                            firstname: user.firstname,
+                            lastname: user.lastname,
+                            email: user.email,
+                            friends: friendships,
+                        }
+                        res.json({
+                            token,
+                            user: payload
+                        });
                     });
                 } else {
                     return res.status(400).send({msg: 'User does not exist'});
@@ -90,7 +106,12 @@ router.post('/auth', (req,res) => {
 router.get('/auth', auth, (req,res) => {
     User.findById(req.user._id)
         .select('-password') // to not return password
-        .then(user => res.json(user));
+        .then(user => {
+            User.getAcceptedFriends(user._id, {}, { firstname: 1, lastname: 1 }, function(err, friendships) {
+                user.friends = friendships;
+                res.json(user);
+            });
+        });
 });
 
 router.post('/add-friend', (req,res) => {
@@ -100,12 +121,5 @@ router.post('/add-friend', (req,res) => {
         else return res.json(friendships);
     });
 }); 
-
-router.get('/get-friends', auth, (req, res) => {
-    User.getAcceptedFriends(req.user._id, {}, { firstname: 1, lastname: 1 }, function(err, friendships) {
-        if(err) return res.status(400).send({msg: err});
-        else return res.json(friendships);
-    });
-});
 
 module.exports = router;

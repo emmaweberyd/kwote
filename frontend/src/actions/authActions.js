@@ -18,14 +18,10 @@ export const loadUser = () => (dispatch, getState) => {
 
     axios.get('http://localhost:5000/users/auth', tokenConfig(getState))
         .then(res => {
-            axios.get('http://localhost:5000/users/get-friends', tokenConfig(getState))
-                .then(friends => {
-                    res.data['friends'] = friends.data;
-                    dispatch({ 
-                        type: USER_LOADED, 
-                        payload: res.data
-                    })
-                })
+            dispatch({ 
+                type: USER_LOADED, 
+                payload: res.data
+            })
         })
         .catch(err => {
             dispatch(returnErrors(err.response.data, err.response.status, 'AUTH_ERROR'));
