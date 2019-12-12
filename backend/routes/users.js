@@ -108,8 +108,14 @@ router.get('/auth', auth, (req,res) => {
         .select('-password') // to not return password
         .then(user => {
             User.getAcceptedFriends(user._id, {}, { firstname: 1, lastname: 1 }, function(err, friendships) {
-                user.friends = friendships;
-                res.json(user);
+                const payload = {
+                    _id: user._id,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    email: user.email,
+                    friends: friendships,
+                }
+                res.json(payload);
             });
         });
 });
