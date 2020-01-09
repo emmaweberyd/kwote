@@ -15,3 +15,6 @@ export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 
+export const USERS_LOADING = 'USERS_LOADING';
+export const USERS_LOADED = 'USERS_LOADED';
+export const USERS_LOADING_FAIL = 'USERS_LOADING_FAIL';

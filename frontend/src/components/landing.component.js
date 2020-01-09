@@ -3,6 +3,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { connect } from 'react-redux';
 import { getPosts, deletePost } from '../actions/postActions';
+import { loadUsers } from '../actions/usersActions';
 import propTypes from 'prop-types';
 import ClearIcon from '@material-ui/icons/Clear';
 import IconButton from '@material-ui/core/IconButton';
@@ -16,6 +17,7 @@ class Landing extends Component {
 
     componentDidMount() {
         this.props.getPosts();
+        this.props.loadUsers();
     }
 
     onDelete = (id) => {
@@ -24,6 +26,7 @@ class Landing extends Component {
 
     render() {
         const { posts } = this.props.post;
+        const { users } = this.props.users;
         const { isAuthenticated } = this.props;
         if(isAuthenticated) {
             return (
@@ -39,11 +42,9 @@ class Landing extends Component {
                                         return (
                                         <ListItem key={_id} style={{paddingLeft: '0', paddingRight: '0'}}>
                                             <Card
-                                                //body 
                                                 style={{
                                                     backgroundColor: '#323B45',
-                                                    width: 'inherit',
-                                                    //padding: "5px"
+                                                    width: 'inherit'
                                                 }}
                                             >
                                                 <div>
@@ -74,7 +75,17 @@ class Landing extends Component {
                                     })}
                                 </List>
                             </Col>
-                            <Col xs="12" sm="3"></Col>
+                            <Col xs="12" sm="3">
+                                <List dense style={{color: 'white'}}>
+                                    {users.map(({_id, firstname, lastname}) => {
+                                        return(
+                                            <ListItem key={_id}> 
+                                                {firstname} {lastname}
+                                            </ListItem>
+                                        );
+                                    })}
+                                </List>
+                            </Col>
                         </Row>
                     </div>
                 </div>
@@ -89,11 +100,13 @@ Landing.propTypes = {
     isAuthenticated: propTypes.bool,
     getPosts: propTypes.func.isRequired,
     post: propTypes.object.isRequired,
+    loadUsers: propTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
-    post: state.post
+    post: state.post,
+    users: state.users
 });
 
-export default connect(mapStateToProps, { getPosts, deletePost })(Landing);
+export default connect(mapStateToProps, { getPosts, deletePost, loadUsers })(Landing);
