@@ -12,9 +12,24 @@ export const loadUsers = () => (dispatch, getState) => {
 
     axios.get('http://localhost:5000/users/') //, tokenConfig(getState))
         .then(res => {
+
+            const user = getState().auth.user;
+            var data = res.data;
+
+            if(user != null) {
+                for (var j in data) { // for each registered user
+                    data[j].status = null;
+                    for (var i in user.friends) { // for each friend
+                        const friend = user.friends[i]
+                        if (friend._id === data[j]._id)  // if friends
+                            data[j].status = friend.status;
+                    }
+                }
+            }
+
             dispatch({ 
                 type: USERS_LOADED, 
-                payload: res.data
+                payload: data
             })
         })
         .catch(err => {

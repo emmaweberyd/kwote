@@ -14,7 +14,12 @@ class PostForm extends Component {
     render() {
         const { addPost } = this.props; 
         const { friends } = this.props.user;
-        return <PostFormField postMethod={addPost} friends={friends}/>
+        var acceptedFriends = [];
+        for (var i in friends) {
+            if (friends[i].status === "accepted")
+                acceptedFriends.push(friends[i]);
+        }
+        return <PostFormField postMethod={addPost} friends={acceptedFriends}/>
     }
 } 
 

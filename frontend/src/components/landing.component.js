@@ -10,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import PostForm from './post-form.component';
 import { Redirect } from 'react-router'
 import NavBar from './navbar.component';
-import { Row, Col, Card } from "react-bootstrap";
+import { Row, Col, Card, Button } from "react-bootstrap";
 
 
 class Landing extends Component {
@@ -33,9 +33,9 @@ class Landing extends Component {
                 <div>  
                     <NavBar/>
                     <div className="container-fluid">
-                        <Row>
+                        <Row style={{paddingTop: '20px'}}>
                             <Col xs="12" sm="3"></Col>
-                            <Col xs="12" sm="6" style={{paddingTop: '20px'}}>
+                            <Col xs="12" sm="6">
                                 <PostForm/>
                                 <List dense style={{color: 'white'}}>
                                     {posts.map(({_id, quote, quotee}) => {
@@ -76,11 +76,21 @@ class Landing extends Component {
                                 </List>
                             </Col>
                             <Col xs="12" sm="3">
-                                <List dense style={{color: 'white'}}>
-                                    {users.map(({_id, firstname, lastname}) => {
+                                <List dense style={{color: 'white', backgroundColor: '#323B45'}}>
+                                    {users.map(({_id, firstname, lastname, status}) => {
+                                        var buttonType = "primary";
+                                        var buttonText = "add friend";
+                                        if (status === "accepted") {
+                                            buttonType = "light";
+                                            buttonText = "friends"
+                                        } else if (status === "pending" || status === "requested"){ 
+                                            buttonText = status;
+                                            buttonType = "info";
+                                        }
                                         return(
                                             <ListItem key={_id}> 
-                                                {firstname} {lastname}
+                                                <Col><p style={{margin: '0'}}>{firstname} {lastname}</p></Col>
+                                                <Col><Button variant={buttonType} size="sm">{buttonText}</Button></Col>
                                             </ListItem>
                                         );
                                     })}

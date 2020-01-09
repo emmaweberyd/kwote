@@ -79,7 +79,7 @@ router.post('/auth', (req,res) => {
                     let token = jwt.sign(payload, process.env.SECRET_KEY, {
                         //expiresIn: 1440
                     })
-                    User.getAcceptedFriends(user._id, {}, { firstname: 1, lastname: 1 }, function(err, friendships) {
+                    User.getFriends(user._id, {}, { firstname: 1, lastname: 1 }, function(err, friendships) {
                         var payload = {
                             _id: user._id,
                             firstname: user.firstname,
@@ -107,7 +107,7 @@ router.get('/auth', auth, (req,res) => {
     User.findById(req.user._id)
         .select('-password') // to not return password
         .then(user => {
-            User.getAcceptedFriends(user._id, {}, { firstname: 1, lastname: 1 }, function(err, friendships) {
+            User.getFriends(user._id, {}, { firstname: 1, lastname: 1 }, function(err, friendships) {
                 const payload = {
                     _id: user._id,
                     firstname: user.firstname,
