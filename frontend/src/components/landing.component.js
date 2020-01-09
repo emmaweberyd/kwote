@@ -4,7 +4,7 @@ import ListItem from '@material-ui/core/ListItem';
 import { connect } from 'react-redux';
 import { getPosts, deletePost } from '../actions/postActions';
 import propTypes from 'prop-types';
-import DeleteIcon from '@material-ui/icons/Delete';
+import ClearIcon from '@material-ui/icons/Clear';
 import IconButton from '@material-ui/core/IconButton';
 import PostForm from './post-form.component';
 import { Redirect } from 'react-router'
@@ -38,18 +38,36 @@ class Landing extends Component {
                                     {posts.map(({_id, quote, quotee}) => {
                                         return (
                                         <ListItem key={_id} style={{paddingLeft: '0', paddingRight: '0'}}>
-                                            <Card body style={{backgroundColor: '#323B45', width: 'inherit'}}>
-                                                <p>"{quote}"</p>
-                                                <footer className="blockquote-footer">
+                                            <Card
+                                                //body 
+                                                style={{
+                                                    backgroundColor: '#323B45',
+                                                    width: 'inherit',
+                                                    //padding: "5px"
+                                                }}
+                                            >
+                                                <div>
+                                                    <p 
+                                                        style={{
+                                                            float: "left",
+                                                            width: "calc(100% - 30px)",
+                                                            padding: "10px", 
+                                                            marginBottom: "0"
+                                                        }}
+                                                    >"{quote}"</p>
+                                                    <div style={{float: "right"}}>
+                                                        <IconButton 
+                                                            onClick={this.onDelete.bind(this,_id)} 
+                                                            aria-label="delete"
+                                                            size="small"
+                                                        >
+                                                            <ClearIcon style={{color: 'white'}}/>
+                                                        </IconButton>
+                                                    </div>
+                                                </div>
+                                                <footer className="blockquote-footer" style={{padding: "0 10px 10px 10px"}}>
                                                     {quotee}
                                                 </footer>
-                                                <IconButton 
-                                                    onClick={this.onDelete.bind(this,_id)} 
-                                                    edge="end" 
-                                                    aria-label="delete"
-                                                >
-                                                    <DeleteIcon />
-                                                </IconButton>
                                             </Card>
                                         </ListItem>
                                         );
