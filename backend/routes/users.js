@@ -129,4 +129,14 @@ router.post('/add-friend', auth, (req,res) => {
     });
 }); 
 
+router.post('/remove-friend', auth, (req,res) => {
+    const { _id, reciever_id} = req.body;
+    User.removeFriend(reciever_id, _id, function(err, friendships) {
+        User.getFriends(_id, {}, { firstname: 1, lastname: 1 }, function(err, friendships) {
+            return res.json(friendships);
+        });
+    });
+
+});
+
 module.exports = router;

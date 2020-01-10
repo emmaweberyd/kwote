@@ -19,3 +19,4 @@ export const USERS_LOADING = 'USERS_LOADING';
 export const USERS_LOADED = 'USERS_LOADED';
 export const USERS_LOADING_FAIL = 'USERS_LOADING_FAIL';
 export const ADD_FRIEND = 'ADD_FRIEND';
+export const REMOVE_FRIEND = 'REMOVE_FRIEND';

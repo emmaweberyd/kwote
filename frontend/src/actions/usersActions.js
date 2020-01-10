@@ -3,7 +3,8 @@ import {
     USERS_LOADING,
     USERS_LOADED,
     USERS_LOADING_FAIL,
-    ADD_FRIEND
+    ADD_FRIEND,
+    REMOVE_FRIEND
 } from './types';
 import { returnErrors } from './errorActions';
 import { tokenConfig } from './authActions';
@@ -66,3 +67,21 @@ export const addFriend = id => (dispatch, getState) => {
         })
     });
 };
+
+export const removeFriend = id => (dispatch, getState) => {
+    const body = JSON.stringify({ _id: getState().auth.user._id, reciever_id: id });
+
+    axios.post('http://localhost:5000/users/remove-friend', body, tokenConfig(getState))
+    .then(res => {
+
+        const friend = {
+            _id: id,
+            status: "pending" //change later
+        }
+
+        dispatch({
+            type: REMOVE_FRIEND,
+            payload: friend
+        })
+    });
+}

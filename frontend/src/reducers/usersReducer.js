@@ -2,7 +2,8 @@ import {
     USERS_LOADING,
     USERS_LOADED,
     USERS_LOADING_FAIL,
-    ADD_FRIEND
+    ADD_FRIEND,
+    REMOVE_FRIEND
 } from '../actions/types';
 
 const initialState = {
@@ -40,6 +41,17 @@ export default function(state = initialState, action){
                 ),
                 loading: false
             };
+        case REMOVE_FRIEND:
+        return {
+            ...state,
+            users: state.users.map(user => user._id === action.payload._id ?
+                // transform the one with a matching id
+                { ...user, status: action.payload.status } : 
+                // otherwise return original user
+                user
+            ),
+            loading: false
+        };
         default:
             return state;
     }

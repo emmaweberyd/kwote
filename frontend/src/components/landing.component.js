@@ -3,14 +3,14 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { connect } from 'react-redux';
 import { getPosts, deletePost } from '../actions/postActions';
-import { loadUsers, addFriend } from '../actions/usersActions';
+import { loadUsers, addFriend, removeFriend } from '../actions/usersActions';
 import propTypes from 'prop-types';
 import ClearIcon from '@material-ui/icons/Clear';
 import IconButton from '@material-ui/core/IconButton';
 import PostForm from './post-form.component';
 import { Redirect } from 'react-router'
 import NavBar from './navbar.component';
-import { Row, Col, Card, Button } from "react-bootstrap";
+import { Row, Col, Card, Button, DropdownButton, Dropdown } from "react-bootstrap";
 
 
 class Landing extends Component {
@@ -26,6 +26,10 @@ class Landing extends Component {
 
     onAddFriend = (id) => {
         this.props.addFriend(id);
+    }
+
+    onDeleteFriend = (id) => {
+        this.props.removeFriend(id);
     }
 
     render() {
@@ -82,24 +86,31 @@ class Landing extends Component {
                             <Col xs="12" sm="3">
                                 <List dense style={{color: 'white', backgroundColor: '#323B45'}}>
                                     {users.map(({_id, firstname, lastname, status}) => {
-                                        var buttonType = "primary";
-                                        var buttonText = "add friend";
-                                        if (status === "accepted") {
-                                            buttonType = "light";
-                                            buttonText = "friends"
-                                        } else if (status === "pending" || status === "requested"){ 
-                                            buttonText = status;
-                                            buttonType = "info";
+                                        
+                                        var button;
+
+                                        if (status !== "accepted") { // pending, requested or null
+                                            var buttonType = "primary";
+                                            var buttonText = "add friend";
+                                            if (status === "pending" || status === "requested"){
+                                                buttonText = status;
+                                                buttonType = "info";
+                                            }
+                                            button = <Button 
+                                                        onClick={this.onAddFriend.bind(this,_id)} 
+                                                        variant={buttonType} 
+                                                        size="sm">{buttonText}
+                                                    </Button>
+                                        } else { // already friends
+                                            button = <DropdownButton variant="light" id="dropdown-basic-button" size="sm" title="friends">
+                                                        <Dropdown.Item size="sm" onClick={this.onDeleteFriend.bind(this,_id)}>remove</Dropdown.Item>
+                                                    </DropdownButton>
                                         }
                                         return(
                                             <ListItem key={_id}> 
                                                 <Col><p style={{margin: '0'}}>{firstname} {lastname}</p></Col>
                                                 <Col>
-                                                    <Button 
-                                                        onClick={this.onAddFriend.bind(this,_id)} 
-                                                        variant={buttonType} 
-                                                        size="sm">{buttonText}
-                                                    </Button>
+                                                    {button}
                                                 </Col>
                                             </ListItem>
                                         );
@@ -129,4 +140,4 @@ const mapStateToProps = (state) => ({
     users: state.users
 });
 
-export default connect(mapStateToProps, { getPosts, deletePost, loadUsers, addFriend })(Landing);
+export default connect(mapStateToProps, { getPosts, deletePost, loadUsers, addFriend, removeFriend })(Landing);
