@@ -2,9 +2,11 @@ import axios from 'axios';
 import {
     USERS_LOADING,
     USERS_LOADED,
-    USERS_LOADING_FAIL
+    USERS_LOADING_FAIL,
+    ADD_FRIEND
 } from './types';
 import { returnErrors } from './errorActions';
+import { tokenConfig } from './authActions';
 
 export const loadUsers = () => (dispatch, getState) => {
 
@@ -38,3 +40,22 @@ export const loadUsers = () => (dispatch, getState) => {
         });
 
 }
+
+export const addFriend = id => (dispatch, getState) => {
+
+    const body = JSON.stringify({ _id: getState().auth.user._id, reciever_id: id });
+
+    axios.post('http://localhost:5000/users/add-friend', body, tokenConfig(getState))
+    .then(res => {
+
+        const friend = {
+            _id: id,
+            status: res.data.friender.status
+        }
+
+        dispatch({
+            type: ADD_FRIEND,
+            payload: friend
+        })
+    });
+};

@@ -120,7 +120,7 @@ router.get('/auth', auth, (req,res) => {
         });
 });
 
-router.post('/add-friend', (req,res) => {
+router.post('/add-friend', auth, (req,res) => {
     const { _id , reciever_id } = req.body;
     User.requestFriend(_id, reciever_id, function(err, friendships) {
         if(err) return res.status(400).send({msg: err});

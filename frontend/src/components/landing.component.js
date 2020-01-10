@@ -3,7 +3,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { connect } from 'react-redux';
 import { getPosts, deletePost } from '../actions/postActions';
-import { loadUsers } from '../actions/usersActions';
+import { loadUsers, addFriend } from '../actions/usersActions';
 import propTypes from 'prop-types';
 import ClearIcon from '@material-ui/icons/Clear';
 import IconButton from '@material-ui/core/IconButton';
@@ -22,6 +22,10 @@ class Landing extends Component {
 
     onDelete = (id) => {
         this.props.deletePost(id);
+    }
+
+    onAddFriend = (id) => {
+        this.props.addFriend(id);
     }
 
     render() {
@@ -90,7 +94,13 @@ class Landing extends Component {
                                         return(
                                             <ListItem key={_id}> 
                                                 <Col><p style={{margin: '0'}}>{firstname} {lastname}</p></Col>
-                                                <Col><Button variant={buttonType} size="sm">{buttonText}</Button></Col>
+                                                <Col>
+                                                    <Button 
+                                                        onClick={this.onAddFriend.bind(this,_id)} 
+                                                        variant={buttonType} 
+                                                        size="sm">{buttonText}
+                                                    </Button>
+                                                </Col>
                                             </ListItem>
                                         );
                                     })}
@@ -119,4 +129,4 @@ const mapStateToProps = (state) => ({
     users: state.users
 });
 
-export default connect(mapStateToProps, { getPosts, deletePost, loadUsers })(Landing);
+export default connect(mapStateToProps, { getPosts, deletePost, loadUsers, addFriend })(Landing);
