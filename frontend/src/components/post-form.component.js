@@ -13,11 +13,11 @@ class PostForm extends Component {
     
     render() {
         const { addPost } = this.props; 
-        const { friends } = this.props.user;
+        const { users } = this.props.users;
         var acceptedFriends = [];
-        for (var i in friends) {
-            if (friends[i].status === "accepted")
-                acceptedFriends.push(friends[i]);
+        for (var i in users) {
+            if (users[i].status === "accepted")
+                acceptedFriends.push(users[i]);
         }
         return <PostFormField postMethod={addPost} friends={acceptedFriends}/>
     }
@@ -29,7 +29,8 @@ PostForm.propTypes = {
 }
 
 const mapStateToProps = state => ({
-    user: state.auth.user
+    user: state.auth.user,
+    users: state.users
 }); 
 
 export default connect(mapStateToProps,{ addPost })(PostForm);
@@ -97,8 +98,8 @@ const PostFormField = props => {
                             onBlur={unToggle}
                         >
                             <option label="Anonymous"/>
-                            {friends.map(({_id, friend}) => {
-                                const name = friend.firstname + " " + friend.lastname;
+                            {friends.map(({_id, firstname, lastname}) => {
+                                const name = firstname + " " + lastname;
                                 return <option key={_id} value={name} label={name}/>;
                             })}
                         </Input>
