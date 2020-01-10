@@ -19,6 +19,13 @@ export const loadUsers = () => (dispatch, getState) => {
             var data = res.data;
 
             if(user != null) {
+
+                var index = data.findIndex(function(item, i){
+                    return item._id === user._id
+                });
+                // remove own user
+                delete data[index];
+
                 for (var j in data) { // for each registered user
                     data[j].status = null;
                     for (var i in user.friends) { // for each friend
