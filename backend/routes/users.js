@@ -5,6 +5,7 @@ const auth = require('../middleware/auth');
 
 router.route('/').get((req,res) => {
     User.find()
+        .select('-password')
         .then(users => res.send(users))
         .catch(err => res.status(400).send({msg: err}));
 });
