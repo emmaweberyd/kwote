@@ -84,7 +84,7 @@ class Landing extends Component {
                                 </List>
                             </Col>
                             <Col xs="12" sm="3">
-                                <List dense style={{color: 'white', backgroundColor: '#323B45'}}>
+                                <List dense style={{color: 'white', backgroundColor: '#323B45', borderRadius: 5}}>
                                     {users.map(({_id, firstname, lastname, status}) => {
                                         
                                         var button;
